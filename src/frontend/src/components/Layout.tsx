@@ -1,10 +1,11 @@
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import { Link, useLocation } from "@tanstack/react-router";
-import { Bell, Menu, MessageSquare, Plane, X } from "lucide-react";
+import { Bell, Download, Menu, MessageSquare, X } from "lucide-react";
 import { useState } from "react";
 import { useInternetIdentity } from "../hooks/useInternetIdentity";
 import { useLocalProfile } from "../hooks/useLocalProfile";
+import { usePWAInstall } from "../hooks/usePWAInstall";
 
 const NAV_LINKS = [
   { to: "/", label: "Dashboard" },
@@ -22,6 +23,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
   const { identity, login, clear, loginStatus } = useInternetIdentity();
   const { profile } = useLocalProfile();
   const [mobileOpen, setMobileOpen] = useState(false);
+  const { canInstall, install } = usePWAInstall();
   const displayName = profile.fullName || (identity ? "Traveller" : "Guest");
   const initials = displayName
     .split(" ")
@@ -36,15 +38,14 @@ export function Layout({ children }: { children: React.ReactNode }) {
         <div className="max-w-7xl mx-auto px-4 h-16 flex items-center justify-between gap-4">
           <Link
             to="/"
-            className="flex items-center gap-2 shrink-0"
+            className="flex items-center shrink-0"
             data-ocid="nav.link"
           >
-            <div className="w-8 h-8 rounded-lg bg-primary flex items-center justify-center">
-              <Plane className="w-4 h-4 text-white" />
-            </div>
-            <span className="font-bold text-lg text-foreground">
-              TravelMate
-            </span>
+            <img
+              src="/assets/uploads/Cheerful-TravelMate-logo-design-1.png"
+              alt="TravelMate"
+              className="h-12 w-auto object-contain"
+            />
           </Link>
 
           <nav className="hidden lg:flex items-center gap-1">
@@ -81,6 +82,18 @@ export function Layout({ children }: { children: React.ReactNode }) {
             <Button variant="ghost" size="icon" className="hidden sm:flex">
               <Bell className="w-5 h-5" />
             </Button>
+            {canInstall && (
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={install}
+                className="hidden sm:flex items-center gap-1.5"
+                data-ocid="nav.button"
+              >
+                <Download className="w-4 h-4" />
+                Install App
+              </Button>
+            )}
             {identity ? (
               <div className="flex items-center gap-2">
                 <Link to="/profile" data-ocid="nav.link">
@@ -151,6 +164,18 @@ export function Layout({ children }: { children: React.ReactNode }) {
                 </Link>
               );
             })}
+            {canInstall && (
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={install}
+                className="mt-2 flex items-center gap-1.5 w-full justify-center"
+                data-ocid="nav.button"
+              >
+                <Download className="w-4 h-4" />
+                Install App
+              </Button>
+            )}
           </nav>
         )}
       </header>
@@ -161,10 +186,11 @@ export function Layout({ children }: { children: React.ReactNode }) {
         <div className="max-w-7xl mx-auto px-4 py-8">
           <div className="flex flex-col md:flex-row items-center justify-between gap-4">
             <div className="flex items-center gap-2 flex-wrap">
-              <div className="w-6 h-6 rounded-md bg-primary flex items-center justify-center">
-                <Plane className="w-3 h-3 text-white" />
-              </div>
-              <span className="text-sm font-semibold">TravelMate</span>
+              <img
+                src="/assets/uploads/Cheerful-TravelMate-logo-design-1.png"
+                alt="TravelMate"
+                className="h-8 w-auto object-contain"
+              />
               <span className="text-sm text-muted-foreground">
                 © {new Date().getFullYear()}. Built with ❤️ using{" "}
                 <a
@@ -179,7 +205,13 @@ export function Layout({ children }: { children: React.ReactNode }) {
             </div>
             <div className="flex items-center gap-4 text-sm text-muted-foreground">
               <span className="cursor-default">About</span>
-              <span className="cursor-default">Privacy</span>
+              <Link
+                to="/privacy-policy"
+                className="hover:text-primary transition-colors"
+                data-ocid="privacy.link"
+              >
+                Privacy Policy
+              </Link>
               <span className="cursor-default">Help</span>
             </div>
             <p className="text-sm text-muted-foreground italic">

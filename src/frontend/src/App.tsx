@@ -13,6 +13,7 @@ import Discover from "./pages/Discover";
 import Luggage from "./pages/Luggage";
 import Messages from "./pages/Messages";
 import Networking from "./pages/Networking";
+import PrivacyPolicy from "./pages/PrivacyPolicy";
 import Profile from "./pages/Profile";
 import Safety from "./pages/Safety";
 
@@ -72,6 +73,12 @@ const messagesRoute = createRoute({
   component: Messages,
 });
 
+const privacyPolicyRoute = createRoute({
+  getParentRoute: () => rootRoute,
+  path: "/privacy-policy",
+  component: PrivacyPolicy,
+});
+
 const routeTree = rootRoute.addChildren([
   indexRoute,
   profileRoute,
@@ -81,6 +88,7 @@ const routeTree = rootRoute.addChildren([
   luggageRoute,
   networkingRoute,
   messagesRoute,
+  privacyPolicyRoute,
 ]);
 
 const router = createRouter({ routeTree });
