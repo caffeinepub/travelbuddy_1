@@ -10,6 +10,7 @@ import { Layout } from "./components/Layout";
 import Conveyance from "./pages/Conveyance";
 import Dashboard from "./pages/Dashboard";
 import Discover from "./pages/Discover";
+import Landing from "./pages/Landing";
 import Luggage from "./pages/Luggage";
 import Messages from "./pages/Messages";
 import Networking from "./pages/Networking";
@@ -29,6 +30,12 @@ const indexRoute = createRoute({
   getParentRoute: () => rootRoute,
   path: "/",
   component: Dashboard,
+});
+
+const landingRoute = createRoute({
+  getParentRoute: () => rootRoute,
+  path: "/landing",
+  component: Landing,
 });
 
 const profileRoute = createRoute({
@@ -81,6 +88,7 @@ const privacyPolicyRoute = createRoute({
 
 const routeTree = rootRoute.addChildren([
   indexRoute,
+  landingRoute,
   profileRoute,
   conveyanceRoute,
   discoverRoute,

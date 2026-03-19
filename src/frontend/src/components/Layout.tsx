@@ -8,6 +8,7 @@ import { useLocalProfile } from "../hooks/useLocalProfile";
 import { usePWAInstall } from "../hooks/usePWAInstall";
 
 const NAV_LINKS = [
+  { to: "/landing", label: "Home" },
   { to: "/", label: "Dashboard" },
   { to: "/discover", label: "Discover" },
   { to: "/conveyance", label: "My Travels" },
@@ -37,7 +38,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
       <header className="sticky top-0 z-50 bg-card border-b border-border shadow-xs">
         <div className="max-w-7xl mx-auto px-4 h-16 flex items-center justify-between gap-4">
           <Link
-            to="/"
+            to="/landing"
             className="flex items-center shrink-0"
             data-ocid="nav.link"
           >
